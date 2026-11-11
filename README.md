@@ -1,8 +1,21 @@
-# Kilodown
+<p align="center">
+  <img src="docs/icon.png" width="128" height="128" alt="Kilodown icon">
+</p>
 
-A tiny native Markdown viewer and editor for macOS, with a Finder Quick Look preview. The whole app is about 1 MB.
+<h1 align="center">Kilodown</h1>
 
-![Kilodown showing a Markdown file in split view](docs/screenshot.jpg)
+<p align="center">
+  A tiny native Markdown viewer and editor for macOS, with a Finder Quick Look preview.<br>
+  The whole app is about 1 MB.
+</p>
+
+![Kilodown showing a Markdown file as source and rendered, side by side](docs/screenshot-app.png)
+
+Press Space on a Markdown file in Finder to see it rendered, images included:
+
+<p align="center">
+  <img src="docs/screenshot-quicklook.png" width="620" alt="Quick Look preview of a Markdown file">
+</p>
 
 ## What it does
 
@@ -75,6 +88,7 @@ Plain Swift with AppKit and WebKit, compiled by a single shell script — there 
 | `Resources` | Preview stylesheet and the bundled Markdown parser |
 | `Support` | Info.plist files and the extension's entitlements |
 | `sample` | A test document with images |
+| `docs` | README images and the demo document shown in them |
 
 Markdown is parsed by [marked](https://github.com/markedjs/marked) running in the system's JavaScriptCore.
 

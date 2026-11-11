@@ -14,34 +14,40 @@ func render(_ px: Int) -> Data {
     let inset = s * 0.1
     let rect = NSRect(x: inset, y: inset, width: s - 2 * inset, height: s - 2 * inset)
     let shape = NSBezierPath(roundedRect: rect, xRadius: s * 0.18, yRadius: s * 0.18)
-    NSGradient(starting: NSColor(calibratedRed: 0.20, green: 0.24, blue: 0.32, alpha: 1),
-               ending: NSColor(calibratedRed: 0.09, green: 0.11, blue: 0.16, alpha: 1))!
+    NSGradient(starting: NSColor(calibratedRed: 1.00, green: 0.58, blue: 0.22, alpha: 1),
+               ending: NSColor(calibratedRed: 0.91, green: 0.30, blue: 0.13, alpha: 1))!
         .draw(in: shape, angle: -90)
 
-    // "M" and a down arrow: the conventional Markdown mark.
+    // "K" and a down arrow: Kilodown's take on the Markdown mark.
     NSColor.white.setStroke()
     NSColor.white.setFill()
-    let w = s * 0.075
-    let m = NSBezierPath()
-    m.lineWidth = w
-    m.lineJoinStyle = .miter
-    let top = s * 0.66, bottom = s * 0.34
-    m.move(to: NSPoint(x: s * 0.24, y: bottom))
-    m.line(to: NSPoint(x: s * 0.24, y: top))
-    m.line(to: NSPoint(x: s * 0.36, y: s * 0.50))
-    m.line(to: NSPoint(x: s * 0.48, y: top))
-    m.line(to: NSPoint(x: s * 0.48, y: bottom))
-    m.stroke()
+    let w = s * 0.08
+    let top = s * 0.67, bottom = s * 0.33, mid = s * 0.50
+
+    // The K's strokes run past the cap and base lines and are clipped flat.
+    NSGraphicsContext.saveGraphicsState()
+    NSBezierPath(rect: NSRect(x: 0, y: bottom, width: s, height: top - bottom)).addClip()
+    let k = NSBezierPath()
+    k.lineWidth = w
+    k.lineJoinStyle = .miter
+    k.move(to: NSPoint(x: s * 0.27, y: bottom - w))
+    k.line(to: NSPoint(x: s * 0.27, y: top + w))
+    let reach = (top - mid + w) / (top - mid)   // extend the arms past the clip
+    k.move(to: NSPoint(x: s * 0.29 + s * 0.20 * reach, y: mid + (top - mid) * reach))
+    k.line(to: NSPoint(x: s * 0.29, y: mid))
+    k.line(to: NSPoint(x: s * 0.29 + s * 0.20 * reach, y: mid - (mid - bottom) * reach))
+    k.stroke()
+    NSGraphicsContext.restoreGraphicsState()
 
     let stem = NSBezierPath()
     stem.lineWidth = w
-    stem.move(to: NSPoint(x: s * 0.68, y: top))
-    stem.line(to: NSPoint(x: s * 0.68, y: s * 0.46))
+    stem.move(to: NSPoint(x: s * 0.69, y: top))
+    stem.line(to: NSPoint(x: s * 0.69, y: s * 0.46))
     stem.stroke()
     let head = NSBezierPath()
-    head.move(to: NSPoint(x: s * 0.57, y: s * 0.48))
-    head.line(to: NSPoint(x: s * 0.79, y: s * 0.48))
-    head.line(to: NSPoint(x: s * 0.68, y: s * 0.32))
+    head.move(to: NSPoint(x: s * 0.575, y: s * 0.48))
+    head.line(to: NSPoint(x: s * 0.805, y: s * 0.48))
+    head.line(to: NSPoint(x: s * 0.69, y: bottom))
     head.close()
     head.fill()
 
